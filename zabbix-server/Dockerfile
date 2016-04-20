@@ -1,4 +1,4 @@
-From ubuntu-ssh
+From index.tenxcloud.com/alan_xie/ubuntu-ssh 
 MAINTAINER xieyixue
 
 RUN wget http://repo.zabbix.com/zabbix/3.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_3.0-1+trusty_all.deb
