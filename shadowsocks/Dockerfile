@@ -23,4 +23,4 @@ ADD run.sh run.sh
 
 EXPOSE 8888
 
-CMD ["run.sh"]
+CMD ["/bin/sh", "run.sh"]
