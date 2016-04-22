@@ -19,10 +19,8 @@ RUN set -ex \
     && apk del --purge $SS_DEP \
     && rm -rf /var/cache/apk/*
 ADD conf.json /etc/shadowsocks.json
-RUN password=$(cat /dev/urandom | head -n 10 | md5sum | head -c 10) \
-    && sed -i "s#PASSWORD#$password#g" /etc/shadowsocks.json \
-    && echo $password
+ADD run.sh run.sh
 
 EXPOSE 8888
 
-ENTRYPOINT ["/usr/local/bin/ssserver", "-c" , "/etc/shadowsocks.json", "-d", "start"]
+CMD ["run.sh"]
