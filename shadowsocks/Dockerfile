@@ -1,12 +1,28 @@
-FROM ubuntu:14.04
-MAINTAINER xieyixue
+# Docker with shadowsocks in pure c
 
-RUN apt-get update
-RUN apt-get -y install python-pip
-RUN apt-get clean
-RUN pip install shadowsocks
+FROM alpine
+MAINTAINER YIXUE XIE
+
+ENV SS_VER 2.4.5
+ENV SS_URL https://github.com/shadowsocks/shadowsocks-libev/archive/v$SS_VER.tar.gz
+ENV SS_DIR shadowsocks-libev-$SS_VER
+ENV SS_DEP autoconf build-base curl libtool linux-headers openssl-dev
+
+RUN set -ex \
+    && apk add --update $SS_DEP \
+    && curl -sSL $SS_URL | tar xz \
+    && cd $SS_DIR \
+        && ./configure \
+        && make install \
+        && cd .. \
+        && rm -rf $SS_DIR \
+    && apk del --purge $SS_DEP \
+    && rm -rf /var/cache/apk/*
 ADD conf.json /etc/shadowsocks.json
+RUN password=$(cat /dev/urandom | head -n 10 | md5sum | head -c 10) \
+    && sed -i "s#PASSWORD#$password#g" /etc/shadowsocks.json \
+    && echo $password
 
-EXPOSE 8388
+EXPOSE 8888
 
-CMD ["/usr/local/bin/ssserver", "-c" , "/etc/shadowsocks.json", "-d", "start"]
+ENTRYPOINT ["/usr/local/bin/ssserver", "-c" , "/etc/shadowsocks.json", "-d", "start"]
