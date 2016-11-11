@@ -52,6 +52,6 @@ RUN echo 'date.timezone = "Asia/Shanghai"' >> /etc/php5/fpm/php.ini
 WORKDIR /
 ADD run.sh /run.sh
 
-EXPOSE [80, 10051]
+EXPOSE 80 10051
 
 CMD ["./run.sh"]
