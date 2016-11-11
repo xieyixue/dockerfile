@@ -1,4 +1,5 @@
 #!/bin/bash
-/etc/init.d/zabbix-server satrt
+service zabbix-server start
+service mysql start
 php5-fpm
-nginx
+nginx -g 'daemon off;'
