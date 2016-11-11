@@ -30,12 +30,13 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN DEBIAN_FRONTEND=noninteractive aptitude -y install mysql-server && aptitude clean
-RUN service mysql start && mysqladmin password qssec.com
-RUN mysql -pqssec.com -e 'CREATE DATABASE  `zabbix` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;'
 WORKDIR /usr/share/doc/zabbix-server-mysql
 
 RUN gzip -d create.sql.gz
-RUN mysql -pqssec.com zabbix < create.sql
+RUN service mysql start && mysqladmin password qssec.com && \
+mysql -pqssec.com -e 'CREATE DATABASE  `zabbix` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;' && \
+mysql -pqssec.com zabbix < create.sql
+
 RUN cp -r /usr/share/zabbix /usr/share/nginx/www
 ADD zabbix_nginx.conf /etc/nginx/sites-enabled/default
 ADD zabbix.conf.php /usr/share/nginx/www/conf/zabbix.conf.php
