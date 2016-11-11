@@ -45,13 +45,13 @@ RUN echo 'DBUser=root' >> /etc/zabbix/zabbix_server.conf
 RUN echo 'DBPassword=qssec.com' >> /etc/zabbix/zabbix_server.conf
 
 RUN echo 'post_max_size = 16M' >> /etc/php5/fpm/php.ini
-RUN echo 'max_input_time = 300' >> php.ini
-RUN echo 'max_execution_time = 300' >> php.ini
-RUN echo 'date.timezone = "Asia/Shanghai"' >> php.ini
+RUN echo 'max_input_time = 300' >> /etc/php5/fpm/php.ini
+RUN echo 'max_execution_time = 300' >> /etc/php5/fpm/php.ini
+RUN echo 'date.timezone = "Asia/Shanghai"' >> /etc/php5/fpm/php.ini
 
 WORKDIR /
 ADD run.sh /run.sh
 
-EXPOSE 80
+EXPOSE [80, 10051]
 
 CMD ["./run.sh"]
