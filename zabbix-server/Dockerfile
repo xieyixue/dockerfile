@@ -1,6 +1,13 @@
 FROM ubuntu:14.04
 MAINTAINER xyx_0410@163.com
 
+RUN apt-get update && \
+    apt-get -y install \
+    wget \
+    && apt-get clean \
+    && apt-get autoclean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 RUN wget http://repo.zabbix.com/zabbix/3.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_3.0-1+trusty_all.deb
 RUN dpkg -i zabbix-release_3.0-1+trusty_all.deb
 
