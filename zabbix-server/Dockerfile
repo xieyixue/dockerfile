@@ -49,7 +49,7 @@ RUN echo 'max_input_time = 300' >> php.ini
 RUN echo 'max_execution_time = 300' >> php.ini
 RUN echo 'date.timezone = "Asia/Shanghai"' >> php.ini
 
-
+WORKDIR /
 ADD run.sh /run.sh
 
 EXPOSE 80
