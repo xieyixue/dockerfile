@@ -1,6 +1,8 @@
 FROM ubuntu:14.04
 MAINTAINER xyx_0410@163.com
-
+RUN groupadd mysql
+RUN groupadd nginx 
+RUN groupadd zabbix
 RUN useradd -r -g mysql mysql
 RUN useradd -r -g zabbix zabbix
 RUN useradd -r -g nginx nginx
